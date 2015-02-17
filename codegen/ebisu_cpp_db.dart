@@ -8,6 +8,8 @@ String _topDir;
 
 void main() {
 
+  final briefDoc = 'A library that supports code generation of C++ database access';
+
   Logger.root.onRecord.listen((LogRecord r) =>
       print("${r.loggerName} [${r.level}]:\t${r.message}"));
   String here = path.absolute(Platform.script.path);
@@ -18,12 +20,13 @@ void main() {
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
     ..pubSpec.version = '0.0.1'
-    ..pubSpec.doc = 'A library that supports code generation of cpp and others'
+    ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..pubSpec.addDevDependency(new PubDependency('unittest'))
     ..rootPath = _topDir
-    ..doc = 'A library that supports code generation of C++ database access'
+    ..doc = briefDoc
     ..testLibraries = [
+      library('test_otl_bindings')
     ]
     ..libraries = [
       library('db_schema')
@@ -112,6 +115,12 @@ void main() {
         part('otl_generator')
         ..enums = [
           enum_('bind_data_type')
+          ..doc = '''
+Data to/from the database must be converted from/to C++ datatypes. Otl supports
+binding specific datatypes. The following enum establishes the binding datatypes
+Otl supports so that code generation logic can manage the required
+transformations on data to/from the otl library.
+'''
           ..libraryScopedValues = true
           ..values = [
             id('bdt_int'),
@@ -167,5 +176,17 @@ queries. Makes use of the poco c++ library.
 
 
 final dbSchemaDoc = '''
-Generates code to support **CRUD** operations on relational database tables.
+Generates code to support **CRUD** operations and other tasks on relational database.
+
+Coding support for C++ access is a pain filled with boilerplate code. The goal
+of this package is to help eliminate that boilerplate by generating required
+CRUD operations. Another motivation is to demonstrate how to generate C++ for a
+specific task using the *ebisu_cpp* set of tools.
+
+In terms of supported platforms, the target is linux environments. However, the
+code is fairly portable and the initial implementation sits on top of *Otl*
+template library making use of the ODBC interface. The initial target database
+is MySql. However the code is generated and attempts are made to make it easy to
+add support for other databases.
+
 ''';

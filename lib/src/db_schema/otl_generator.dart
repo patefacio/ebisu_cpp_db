@@ -1,5 +1,10 @@
 part of ebisu_cpp_db.db_schema;
 
+/// Data to/from the database must be converted from/to C++ datatypes. Otl supports
+/// binding specific datatypes. The following enum establishes the binding datatypes
+/// Otl supports so that code generation logic can manage the required
+/// transformations on data to/from the otl library.
+///
 enum BindDataType {
   bdtInt,
   bdtShort,
