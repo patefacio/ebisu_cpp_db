@@ -1,19 +1,28 @@
 part of ebisu_cpp_db.db_schema;
 
-abstract class SchemaCodeGenerator extends Object with InstallationContainer
-    implements CodeGenerator {
+/// Creates a single C++ [Library] that supports accessing the tables
+/// associated with the schema. The [lib] property with create the
+/// [Library] when called. If not all tables are desired to have *CRUD*
+/// access, they can be filtered with [tableFilter] prior to accessing the
+/// [lib].
+///
+abstract class SchemaLibCreator extends Object with InstallationContainer {
+  /// Target schema for generating C++ *CRUD* support
   Schema schema;
+  /// Id associated with the schema
   Id get id => _id;
+  /// Set of SQL queries to add C++ support
   List<Query> queries = [];
+  /// Can be used to filter to just the tables to be provided *CRUD* support
   TableFilter tableFilter = (Table t) => true;
-  // custom <class SchemaCodeGenerator>
+  // custom <class SchemaLibCreator>
 
   get namespace => new Namespace(['fcs', 'orm', id.snake]);
   get tables => schema.tables.where((t) => tableFilter(t));
   TableGatewayGenerator createTableGatewayGenerator(Table t);
   finishApiHeader(Header apiHeader);
 
-  SchemaCodeGenerator(this.schema) {
+  SchemaLibCreator(this.schema) {
     _id = idFromString(schema.name);
   }
 
@@ -40,7 +49,7 @@ abstract class SchemaCodeGenerator extends Object with InstallationContainer
     return result;
   }
 
-  // end <class SchemaCodeGenerator>
+  // end <class SchemaLibCreator>
   Id _id;
 }
 
@@ -77,15 +86,13 @@ class TableDetails {
 
 abstract class TableGatewayGenerator {
   Installation installation;
-  SchemaCodeGenerator schemaCodeGenerator;
+  SchemaLibCreator schemaLibCreator;
   Class keyClass;
   Class valueClass;
   // custom <class TableGatewayGenerator>
 
-  TableGatewayGenerator(
-      this.installation, this.schemaCodeGenerator, Table table) {
-    _tableDetails =
-        new TableDetails.fromTable(schemaCodeGenerator.schema, table);
+  TableGatewayGenerator(this.installation, this.schemaLibCreator, Table table) {
+    _tableDetails = new TableDetails.fromTable(schemaLibCreator.schema, table);
     keyClass = _makeClass(keyClassId.snake, table.primaryKey);
     valueClass = _makeClass(valueClassId.snake, table.valueColumns);
   }
@@ -177,7 +184,7 @@ to_string_list(String_list_t &out) const {
   }
 
   Namespace get namespace => new Namespace([]
-    ..addAll(schemaCodeGenerator.namespace.names)
+    ..addAll(schemaLibCreator.namespace.names)
     ..addAll(['table']));
 
   Header _makeHeader() {

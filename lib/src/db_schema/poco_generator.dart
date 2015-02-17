@@ -3,7 +3,7 @@ part of ebisu_cpp_db.db_schema;
 /// Given a schema generates code to support accessing tables and configured
 /// queries. Makes use of the poco c++ library.
 ///
-class PocoSchemaCodeGenerator extends SchemaCodeGenerator {
+class PocoSchemaCodeGenerator extends SchemaLibCreator {
   Id get sessionClassId => _sessionClassId;
   String get sessionClassName => _sessionClassName;
   // custom <class PocoSchemaCodeGenerator>
@@ -18,6 +18,8 @@ class PocoSchemaCodeGenerator extends SchemaCodeGenerator {
   TableGatewayGenerator createTableGatewayGenerator(Table t) =>
       new PocoTableGatewayGenerator(installation, this, t);
 
+  finishApiHeader(Header apiHeader) => throw 'TODO';
+
   // end <class PocoSchemaCodeGenerator>
   Id _sessionClassId;
   String _sessionClassName;
@@ -26,15 +28,26 @@ class PocoSchemaCodeGenerator extends SchemaCodeGenerator {
 class PocoTableGatewayGenerator extends TableGatewayGenerator {
   // custom <class PocoTableGatewayGenerator>
 
-  PocoTableGatewayGenerator(Installation installation,
-      SchemaCodeGenerator schemaCodeGenerator, Table table)
-      : super(installation, schemaCodeGenerator, table);
+  PocoTableGatewayGenerator(
+      Installation installation, SchemaLibCreator schemaLibCreator, Table table)
+      : super(installation, schemaLibCreator, table);
 
-  void finishClass(Class cls) {}
+  void finishClass(Class cls) => throw 'TODO';
 
-  void finishGatewayClass(Class gatewayClass) {}
+  void finishGatewayClass(Class gatewayClass) => throw 'TODO';
 
   void addRequiredIncludes(Header hdr) => hdr.includes.addAll([]);
+
+  get selectLastInsertId => throw 'TODO';
+  get selectAffectedRowCount => throw 'TODO';
+  get selectTableRowCount => throw 'TODO';
+  get selectAllRows => throw 'TODO';
+  get findRowByKey => throw 'TODO';
+  get findRowByValue => throw 'TODO';
+  get insertRowList => throw 'TODO';
+  get updateRowList => throw 'TODO';
+  get deleteRow => throw 'TODO';
+  get deleteAllRows => throw 'TODO';
 
   // end <class PocoTableGatewayGenerator>
 }

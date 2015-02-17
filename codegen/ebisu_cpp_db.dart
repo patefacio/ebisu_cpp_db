@@ -19,7 +19,7 @@ void main() {
     ..includeHop = true
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
-    ..pubSpec.version = '0.0.1'
+    ..pubSpec.version = '0.0.2'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..pubSpec.addDevDependency(new PubDependency('unittest'))
@@ -80,15 +80,29 @@ void main() {
         ],
         part('generator')
         ..classes = [
-          class_('schema_code_generator')
+          class_('schema_lib_creator')
+          ..doc = '''
+Creates a single C++ [Library] that supports accessing the tables
+associated with the schema. The [lib] property with create the
+[Library] when called. If not all tables are desired to have *CRUD*
+access, they can be filtered with [tableFilter] prior to accessing the
+[lib].
+'''
           ..mixins = [ 'InstallationContainer' ]
-          ..implement = [ 'CodeGenerator' ]
           ..isAbstract = true
           ..members = [
-            member('schema')..type = 'Schema',
-            member('id')..type = 'Id'..access = RO,
-            member('queries')..type = 'List<Query>'..classInit = [],
-            member('table_filter')..type = 'TableFilter'..classInit = '(Table t) => true',
+            member('schema')
+            ..doc = 'Target schema for generating C++ *CRUD* support'
+            ..type = 'Schema',
+            member('id')
+            ..doc = 'Id associated with the schema'
+            ..type = 'Id'..access = RO,
+            member('queries')
+            ..doc = 'Set of SQL queries to add C++ support'
+            ..type = 'List<Query>'..classInit = [],
+            member('table_filter')
+            ..doc = 'Can be used to filter to just the tables to be provided *CRUD* support'
+            ..type = 'TableFilter'..classInit = '(Table t) => true',
           ],
           class_('table_details')
           ..immutable = true
@@ -105,7 +119,7 @@ void main() {
           ..isAbstract = true
           ..members = [
             member('installation')..type = 'Installation',
-            member('schema_code_generator')..type = 'SchemaCodeGenerator',
+            member('schema_lib_creator')..type = 'SchemaLibCreator',
             member('table_details')..type = 'TableDetails'..access = IA,
             member('key_class')..type = 'Class',
             member('value_class')..type = 'Class',
@@ -141,7 +155,7 @@ transformations on data to/from the otl library.
             member('size')..classInit = 0,
           ],
           class_('otl_schema_code_generator')
-          ..extend = 'SchemaCodeGenerator'
+          ..extend = 'SchemaLibCreator'
           ..doc = '''
 Given a schema generates code to support accessing tables and configured
 queries. Makes use of the otl c++ library.
@@ -156,7 +170,7 @@ queries. Makes use of the otl c++ library.
         part('poco_generator')
         ..classes = [
           class_('poco_schema_code_generator')
-          ..extend = 'SchemaCodeGenerator'
+          ..extend = 'SchemaLibCreator'
           ..doc = '''
 Given a schema generates code to support accessing tables and configured
 queries. Makes use of the poco c++ library.

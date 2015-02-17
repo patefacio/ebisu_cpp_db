@@ -106,7 +106,7 @@ class OtlBindVariable {
 /// Given a schema generates code to support accessing tables and configured
 /// queries. Makes use of the otl c++ library.
 ///
-class OtlSchemaCodeGenerator extends SchemaCodeGenerator {
+class OtlSchemaCodeGenerator extends SchemaLibCreator {
   Id get connectionClassId => _connectionClassId;
   String get connectionClassName => _connectionClassName;
   // custom <class OtlSchemaCodeGenerator>
@@ -152,9 +152,9 @@ otl_connect * connection() {
 class OtlTableGatewayGenerator extends TableGatewayGenerator {
   // custom <class OtlTableGatewayGenerator>
 
-  OtlTableGatewayGenerator(Installation installation,
-      SchemaCodeGenerator schemaCodeGenerator, Table table)
-      : super(installation, schemaCodeGenerator, table);
+  OtlTableGatewayGenerator(
+      Installation installation, SchemaLibCreator schemaLibCreator, Table table)
+      : super(installation, schemaLibCreator, table);
 
   void finishClass(Class cls) {
     cls.getCodeBlock(clsPostDecl).snippets.add(_otlStreamSupport(cls));
