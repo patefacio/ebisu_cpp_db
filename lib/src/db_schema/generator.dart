@@ -141,11 +141,13 @@ fk.columnPairs.map((l) =>
       .map((ForeignKey fk) => _linkToMethod(fk)));
 
   _stringListSupport(Iterable<Member> members) => '''
+/// Access to list of names of members
 static inline
 void member_names_list(String_list_t &out) {
   ${members.map((m) => 'out.push_back("${m.name}");').join('\n  ')}
 }
 
+/// The values of the members as list of strings
 inline void
 to_string_list(String_list_t &out) const {
   ${members.map((m) => 'out.push_back(boost::lexical_cast< std::string >(${m.vname}));').join('\n  ')}
