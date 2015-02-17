@@ -12,7 +12,7 @@ main() {
 // custom <main>
 
   group('OtlBindVariable', () {
-    [ 1, 2, 3, 4 ].forEach((int bytes) {
+    [1, 2, 3, 4].forEach((int bytes) {
       test('sql int of $bytes bytes is int', () {
         final t = new SqlInt(bytes, 10);
         final obv = new OtlBindVariable.fromDataType('age', t);
@@ -25,8 +25,8 @@ main() {
       expect(obv.toString(), ':age<bigint>');
     });
 
-    [ 10, 20, 30 ].forEach((int chars) {
-      [ true, false ].forEach((final bool isVarying) {
+    [10, 20, 30].forEach((int chars) {
+      [true, false].forEach((final bool isVarying) {
         test('sql string of length $chars varying $isVarying', () {
           final t = new SqlString(chars, isVarying);
           final obv = new OtlBindVariable.fromDataType('name', t);
@@ -41,8 +41,8 @@ main() {
     });
 
     {
-      final precisions = [ 2, 5, 10];
-      final scale = [ 2, 4 ];
+      final precisions = [2, 5, 10];
+      final scale = [2, 4];
       precisions.forEach((int precision) {
         scale.forEach((int scale) {
           test('sql float precision $precision scale $scale', () {
@@ -61,11 +61,12 @@ main() {
     });
 
     {
-      final hasTimezones = [ false, true ];
-      final autoUpdates = [ false, true ];
+      final hasTimezones = [false, true];
+      final autoUpdates = [false, true];
       hasTimezones.forEach((bool hasTimezone) {
         autoUpdates.forEach((bool autoUpdate) {
-          test('sql timestamp hasTimezone $hasTimezone autoUpdate $autoUpdate', () {
+          test('sql timestamp hasTimezone $hasTimezone autoUpdate $autoUpdate',
+              () {
             final t = new SqlTimestamp(hasTimezone, autoUpdate);
             final obv = new OtlBindVariable.fromDataType('birth_date', t);
             expect(obv.toString(), ':birth_date<timestamp>');
@@ -73,7 +74,6 @@ main() {
         });
       });
     }
-
   });
 
 // end <main>
