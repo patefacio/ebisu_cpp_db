@@ -1,4 +1,4 @@
-part of ebisu_cpp.db_schema;
+part of ebisu_cpp_db.db_schema;
 
 class Gateway {
   const Gateway(this.tableDetails);

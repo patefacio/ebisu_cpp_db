@@ -1,4 +1,4 @@
-part of ebisu_cpp.db_schema;
+part of ebisu_cpp_db.db_schema;
 
 /// Given a schema generates code to support accessing tables and configured
 /// queries. Makes use of the poco c++ library.
