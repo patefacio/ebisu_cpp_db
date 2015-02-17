@@ -38,7 +38,7 @@ void main() {
         "'package:path/path.dart' as path",
         'package:ini/ini.dart',
         '"package:sqljocky/sqljocky.dart" hide Query',
-        'package:ebisu_cpp/cpp.dart',
+        'package:ebisu_cpp/ebisu_cpp.dart',
         'package:magus/schema.dart',
         'dart:async',
       ]
