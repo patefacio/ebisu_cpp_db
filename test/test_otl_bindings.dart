@@ -3,7 +3,7 @@ library ebisu_cpp_db.test.test_otl_bindings;
 import 'package:unittest/unittest.dart';
 // custom <additional imports>
 import 'package:magus/schema.dart';
-import 'package:ebisu_cpp_db/db_schema.dart';
+import 'package:ebisu_cpp_db/ebisu_cpp_db.dart';
 // end <additional imports>
 
 // custom <library test_otl_bindings>

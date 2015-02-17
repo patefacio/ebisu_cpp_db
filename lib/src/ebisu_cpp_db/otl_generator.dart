@@ -1,4 +1,4 @@
-part of ebisu_cpp_db.db_schema;
+part of ebisu_cpp_db.ebisu_cpp_db;
 
 /// Data to/from the database must be converted from/to C++ datatypes. Otl supports
 /// binding specific datatypes. The following enum establishes the binding datatypes

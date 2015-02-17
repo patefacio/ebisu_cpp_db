@@ -1,4 +1,4 @@
-part of ebisu_cpp_db.db_schema;
+part of ebisu_cpp_db.ebisu_cpp_db;
 
 /// Creates a single C++ [Library] that supports accessing the tables
 /// associated with the schema. The [lib] property with create the

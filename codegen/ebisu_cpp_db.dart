@@ -29,7 +29,7 @@ void main() {
       library('test_otl_bindings')
     ]
     ..libraries = [
-      library('db_schema')
+      library('ebisu_cpp_db')
       ..doc = dbSchemaDoc
       ..imports = [
         'dart:io',
