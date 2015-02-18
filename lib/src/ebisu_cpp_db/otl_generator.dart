@@ -110,6 +110,7 @@ class OtlSchemaCodeGenerator extends SchemaLibCreator {
   Id get connectionClassId => _connectionClassId;
   String get connectionClassName => _connectionClassName;
   // custom <class OtlSchemaCodeGenerator>
+
   OtlSchemaCodeGenerator(Schema schema) : super(schema) {
     _connectionClassId = new Id('connection_${id.snake}');
     _connectionClassName = _connectionClassId.capSnake;

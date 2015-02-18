@@ -19,14 +19,24 @@ void main() {
     ..includeHop = true
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
-    ..pubSpec.version = '0.0.2'
+    ..pubSpec.version = '0.0.3'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..pubSpec.addDevDependency(new PubDependency('unittest'))
     ..rootPath = _topDir
     ..doc = briefDoc
     ..testLibraries = [
-      library('test_otl_bindings')
+      library('test_otl_bindings'),
+      library('test_mysql_code_metrics')
+      ..doc = '''
+This test library passes a sample schema, *code_metrics*, through the
+schema generator. It does not require access to a database. The
+*magus* project parses the schema and provides the
+metadata. *ebisu_cpp_db* uses *ebisu_cpp* to generate the crud
+support. This test does not ensure much other than that the
+appropriate classes are created, with expected members and
+methods. The real test for generated code is in the usage.
+''',
     ]
     ..libraries = [
       library('ebisu_cpp_db')
