@@ -20,6 +20,7 @@ import 'package:ebisu/ebisu.dart';
 import 'package:ebisu_cpp/ebisu_cpp.dart';
 import 'package:id/id.dart';
 import 'package:ini/ini.dart';
+import 'package:logging/logging.dart';
 import 'package:magus/schema.dart';
 import 'package:path/path.dart' as path;
 import 'package:quiver/core.dart';
@@ -32,6 +33,8 @@ part 'src/ebisu_cpp_db/test_support.dart';
 part 'src/ebisu_cpp_db/generator.dart';
 part 'src/ebisu_cpp_db/otl_generator.dart';
 part 'src/ebisu_cpp_db/poco_generator.dart';
+
+final _logger = new Logger('ebisu_cpp_db');
 
 // custom <library ebisu_cpp_db>
 // end <library ebisu_cpp_db>

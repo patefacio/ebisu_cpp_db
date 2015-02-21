@@ -28,7 +28,7 @@ abstract class SchemaLibCreator extends Object with InstallationContainer {
 
   Lib get lib {
     final queryVisitor = schema.engine.queryVisitor;
-    print('All queries are ${queries.map((q) => queryVisitor.select(q))}');
+    _logger.info('Queries: ${queries.map((q) => queryVisitor.select(q))}');
     final ns = namespace;
 
     final apiHeader = new Header(id)

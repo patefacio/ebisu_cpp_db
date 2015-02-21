@@ -40,6 +40,7 @@ methods. The real test for generated code is in the usage.
     ]
     ..libraries = [
       library('ebisu_cpp_db')
+      ..includeLogger = true
       ..doc = dbSchemaDoc
       ..imports = [
         'dart:io',
