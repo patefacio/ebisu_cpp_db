@@ -1,14 +1,21 @@
 library ebisu_cpp_db.test.test_otl_bindings;
 
+import 'package:args/args.dart';
+import 'package:logging/logging.dart';
 import 'package:unittest/unittest.dart';
 // custom <additional imports>
 import 'package:magus/schema.dart';
 import 'package:ebisu_cpp_db/ebisu_cpp_db.dart';
 // end <additional imports>
 
+final _logger = new Logger('test_otl_bindings');
+
 // custom <library test_otl_bindings>
 // end <library test_otl_bindings>
-main() {
+main([List<String> args]) {
+  Logger.root.onRecord.listen(
+      (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
+  Logger.root.level = Level.OFF;
 // custom <main>
 
   group('OtlBindVariable', () {

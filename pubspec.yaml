@@ -1,5 +1,5 @@
 name: ebisu_cpp_db
-version: 0.0.3
+version: 0.0.4
 author: Daniel Davidson <dbdavidson@yahoo.com>
 homepage: https://github.com/patefacio/ebisu_cpp_db
 description: >
@@ -9,13 +9,13 @@ dependencies:
 
 # custom <ebisu_cpp_db dependencies>
 
-  magus: ">=0.0.4<0.1.0"
   quiver: ">=0.18.2<0.19.0"
   ini: ">=1.0.0<1.2.0"
   github: ">=2.1.2<2.2.0"
   sqljocky: ">=0.11.0<0.12.0"
-  ebisu_cpp: ">=0.0.6<0.1.0"  
-  ebisu: ">=0.0.13<0.1.0"
+  magus: "^0.0.7"
+  ebisu_cpp: "^0.0.7"  
+  ebisu: "^0.2.1"
 
 # end <ebisu_cpp_db dependencies>
 
@@ -27,6 +27,10 @@ dev_dependencies:
   hop_docgen: "any"
 
 # custom <ebisu_cpp_db dev dependencies>
+
+environment:
+  sdk: ">=1.8.0 <2.0.0"
+
 # end <ebisu_cpp_db dev dependencies>
 
 dependency_overrides:

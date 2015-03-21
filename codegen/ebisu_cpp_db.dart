@@ -16,10 +16,10 @@ void main() {
   _topDir = path.dirname(path.dirname(here));
   useDartFormatter = true;
   System ebisu = system('ebisu_cpp_db')
-    ..includeHop = true
+    ..includesHop = true
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
-    ..pubSpec.version = '0.0.3'
+    ..pubSpec.version = '0.0.4'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..pubSpec.addDevDependency(new PubDependency('unittest'))
@@ -40,7 +40,7 @@ methods. The real test for generated code is in the usage.
     ]
     ..libraries = [
       library('ebisu_cpp_db')
-      ..includeLogger = true
+      ..includesLogger = true
       ..doc = dbSchemaDoc
       ..imports = [
         'dart:io',
@@ -58,7 +58,7 @@ methods. The real test for generated code is in the usage.
         ..classes = [
           class_('data_type')
           ..ctorConst = ['']
-          ..opEquals = true
+          ..hasOpEquals = true
           ..members = [
             member('db_type')..isFinal = true..ctors = [''],
             member('cpp_type')..isFinal = true..ctors = [''],
@@ -72,7 +72,7 @@ methods. The real test for generated code is in the usage.
         part('test_support')
         ..classes = [
           class_('gateway')
-          ..immutable = true
+          ..isImmutable = true
           ..members = [
             member('table_details')..type = 'TableDetails',
           ],
@@ -99,9 +99,9 @@ associated with the schema. The [lib] property with create the
 access, they can be filtered with [tableFilter] prior to accessing the
 [lib].
 '''
-          ..mixins = [ 'InstallationContainer' ]
           ..isAbstract = true
           ..members = [
+            member('installation')..type = 'Installation',
             member('schema')
             ..doc = 'Target schema for generating C++ *CRUD* support'
             ..type = 'Schema',
@@ -116,7 +116,7 @@ access, they can be filtered with [tableFilter] prior to accessing the
             ..type = 'TableFilter'..classInit = '(Table t) => true',
           ],
           class_('table_details')
-          ..immutable = true
+          ..isImmutable = true
           ..members = [
             member('schema')..type = 'Schema',
             member('table')..type = 'Table',
@@ -129,7 +129,6 @@ access, they can be filtered with [tableFilter] prior to accessing the
           class_('table_gateway_generator')
           ..isAbstract = true
           ..members = [
-            member('installation')..type = 'Installation',
             member('schema_lib_creator')..type = 'SchemaLibCreator',
             member('table_details')..type = 'TableDetails'..access = IA,
             member('key_class')..type = 'Class',
@@ -146,7 +145,7 @@ binding specific datatypes. The following enum establishes the binding datatypes
 Otl supports so that code generation logic can manage the required
 transformations on data to/from the otl library.
 '''
-          ..libraryScopedValues = true
+          ..hasLibraryScopedValues = true
           ..values = [
             id('bdt_int'),
             id('bdt_short'),

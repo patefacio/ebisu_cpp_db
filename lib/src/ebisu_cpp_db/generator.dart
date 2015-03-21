@@ -6,7 +6,8 @@ part of ebisu_cpp_db.ebisu_cpp_db;
 /// access, they can be filtered with [tableFilter] prior to accessing the
 /// [lib].
 ///
-abstract class SchemaLibCreator extends Object with InstallationContainer {
+abstract class SchemaLibCreator {
+  Installation installation;
   /// Target schema for generating C++ *CRUD* support
   Schema schema;
   /// Id associated with the schema
@@ -22,7 +23,7 @@ abstract class SchemaLibCreator extends Object with InstallationContainer {
   TableGatewayGenerator createTableGatewayGenerator(Table t);
   finishApiHeader(Header apiHeader);
 
-  SchemaLibCreator(this.schema) {
+  SchemaLibCreator(this.installation, this.schema) {
     _id = idFromString(schema.name);
   }
 
@@ -34,12 +35,11 @@ abstract class SchemaLibCreator extends Object with InstallationContainer {
     final apiHeader = new Header(id)
       ..isApiHeader = true
       ..namespace = ns
-      ..setFilePathFromRoot(installation.cppPath);
+      ..setFilePathFromRoot(this.installation.cppPath);
 
     finishApiHeader(apiHeader);
 
     final result = new Lib(id)
-      ..installation = installation
       ..namespace = ns
       ..headers = [apiHeader];
 
@@ -85,18 +85,18 @@ class TableDetails {
 }
 
 abstract class TableGatewayGenerator {
-  Installation installation;
   SchemaLibCreator schemaLibCreator;
   Class keyClass;
   Class valueClass;
   // custom <class TableGatewayGenerator>
 
-  TableGatewayGenerator(this.installation, this.schemaLibCreator, Table table) {
+  TableGatewayGenerator(this.schemaLibCreator, Table table) {
     _tableDetails = new TableDetails.fromTable(schemaLibCreator.schema, table);
     keyClass = _makeClass(keyClassId.snake, table.primaryKey);
     valueClass = _makeClass(valueClassId.snake, table.valueColumns);
   }
 
+  get installation => schemaLibCreator.installation;
   get schema => _tableDetails.schema;
   get table => _tableDetails.table;
   get tableId => _tableDetails.tableId;
@@ -124,7 +124,7 @@ abstract class TableGatewayGenerator {
   _makeMember(c) => member(c.name)
     ..cppAccess = public
     ..type = _cppType(c.type)
-    ..noInit = true;
+    ..hasNoInit = true;
 
   _colInRow(Table table, Column c) =>
       table.isPrimaryKeyColumn(c) ? 'first.${c.name}' : 'second.${c.name}';
@@ -163,10 +163,10 @@ to_string_list(String_list_t &out) const {
 
   _makeClass(String id, Iterable<Column> columns) {
     final result = class_(id)
-      ..struct = true
+      ..isStruct = true
       ..opEqual
       ..opLess
-      ..streamable = true
+      ..isStreamable = true
       ..members = columns.map((c) => _makeMember(c)).toList();
     result.getCodeBlock(clsPublic).snippets
         .add(_stringListSupport(result.members));
@@ -199,7 +199,7 @@ to_string_list(String_list_t &out) const {
     });
 
     final gatewayClass = class_('${tableName}')
-      ..includeTest = !hasForeignKey
+      ..includesTest = !hasForeignKey
       ..isSingleton = true
       ..template = [
         'typename PKEY_LIST_TYPE = std::vector< $keyClassType >',

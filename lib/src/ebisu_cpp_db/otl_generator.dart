@@ -111,7 +111,8 @@ class OtlSchemaCodeGenerator extends SchemaLibCreator {
   String get connectionClassName => _connectionClassName;
   // custom <class OtlSchemaCodeGenerator>
 
-  OtlSchemaCodeGenerator(Schema schema) : super(schema) {
+  OtlSchemaCodeGenerator(Installation installation, Schema schema)
+      : super(installation, schema) {
     _connectionClassId = new Id('connection_${id.snake}');
     _connectionClassName = _connectionClassId.capSnake;
   }
@@ -119,7 +120,7 @@ class OtlSchemaCodeGenerator extends SchemaLibCreator {
   get namespace => super.namespace;
 
   TableGatewayGenerator createTableGatewayGenerator(Table t) =>
-      new OtlTableGatewayGenerator(installation, this, t);
+      new OtlTableGatewayGenerator(this, t);
 
   finishApiHeader(Header apiHeader) {
     final connectionClass = 'connection_${id.snake}';
@@ -153,9 +154,8 @@ otl_connect * connection() {
 class OtlTableGatewayGenerator extends TableGatewayGenerator {
   // custom <class OtlTableGatewayGenerator>
 
-  OtlTableGatewayGenerator(
-      Installation installation, SchemaLibCreator schemaLibCreator, Table table)
-      : super(installation, schemaLibCreator, table);
+  OtlTableGatewayGenerator(SchemaLibCreator schemaLibCreator, Table table)
+      : super(schemaLibCreator, table);
 
   void finishClass(Class cls) {
     cls.getCodeBlock(clsPostDecl).snippets.add(_otlStreamSupport(cls));

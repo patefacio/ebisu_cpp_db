@@ -8,6 +8,8 @@
 ///
 library ebisu_cpp_db.test.test_mysql_code_metrics;
 
+import 'package:args/args.dart';
+import 'package:logging/logging.dart';
 import 'package:unittest/unittest.dart';
 // custom <additional imports>
 
@@ -19,6 +21,8 @@ import 'package:ebisu_cpp/ebisu_cpp.dart';
 import 'package:id/id.dart';
 
 // end <additional imports>
+
+final _logger = new Logger('test_mysql_code_metrics');
 
 // custom <library test_mysql_code_metrics>
 final ddl = {
@@ -76,7 +80,10 @@ CREATE TABLE `rusage_delta` (
 };
 
 // end <library test_mysql_code_metrics>
-main() {
+main([List<String> args]) {
+  Logger.root.onRecord.listen(
+      (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
+  Logger.root.level = Level.OFF;
 // custom <main>
   final parser = new MysqlSchemaParser();
 
@@ -112,7 +119,7 @@ main() {
     final engine = new MysqlEngine(null);
     final installation = new Installation(new Id('test'))..root = '/tmp';
     final schema = new Schema(engine, 'code_metrics', tables);
-    final generator = new OtlSchemaCodeGenerator(schema)
+    final generator = new OtlSchemaCodeGenerator(installation, schema)
       ..installation = installation;
     final lib = generator.lib;
     final headers = lib.headers;

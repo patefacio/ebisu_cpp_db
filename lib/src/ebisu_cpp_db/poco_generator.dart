@@ -8,7 +8,8 @@ class PocoSchemaCodeGenerator extends SchemaLibCreator {
   String get sessionClassName => _sessionClassName;
   // custom <class PocoSchemaCodeGenerator>
 
-  PocoSchemaCodeGenerator(Schema schema) : super(schema) {
+  PocoSchemaCodeGenerator(Installation installation, Schema schema)
+      : super(installation, schema) {
     _sessionClassId = new Id('connection_${id.snake}');
     _sessionClassName = _sessionClassId.capSnake;
   }
