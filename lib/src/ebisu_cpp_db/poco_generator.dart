@@ -6,6 +6,7 @@ part of ebisu_cpp_db.ebisu_cpp_db;
 class PocoSchemaCodeGenerator extends SchemaLibCreator {
   Id get sessionClassId => _sessionClassId;
   String get sessionClassName => _sessionClassName;
+
   // custom <class PocoSchemaCodeGenerator>
 
   PocoSchemaCodeGenerator(Installation installation, Schema schema)
@@ -22,11 +23,13 @@ class PocoSchemaCodeGenerator extends SchemaLibCreator {
   finishApiHeader(Header apiHeader) => throw 'TODO';
 
   // end <class PocoSchemaCodeGenerator>
+
   Id _sessionClassId;
   String _sessionClassName;
 }
 
 class PocoTableGatewayGenerator extends TableGatewayGenerator {
+
   // custom <class PocoTableGatewayGenerator>
 
   PocoTableGatewayGenerator(
@@ -51,6 +54,8 @@ class PocoTableGatewayGenerator extends TableGatewayGenerator {
   get deleteAllRows => throw 'TODO';
 
   // end <class PocoTableGatewayGenerator>
+
 }
+
 // custom <part poco_generator>
 // end <part poco_generator>

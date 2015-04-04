@@ -10,21 +10,26 @@ class DataType {
 
   final String dbType;
   final String cppType;
+
   // custom <class DataType>
 
   toString() => 'Db($dbType) <=> C++($cppType)';
 
   // end <class DataType>
+
 }
 
 class FixedVarchar extends DataType {
   int size;
+
   // custom <class FixedVarchar>
 
   FixedVarchar(this.size, dbType, cppType) : super(dbType, cppType);
 
   // end <class FixedVarchar>
+
 }
+
 // custom <part meta>
 
 const Int = const DataType('INT', 'int32_t');

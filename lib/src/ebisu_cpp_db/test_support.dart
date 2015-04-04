@@ -4,6 +4,7 @@ class Gateway {
   const Gateway(this.tableDetails);
 
   final TableDetails tableDetails;
+
   // custom <class Gateway>
 
   get table => tableDetails.table;
@@ -52,6 +53,7 @@ $className<>::print_recordset_as_table(
   $vname, std::cout);''';
 
   // end <class Gateway>
+
 }
 
 /// Class to generate test code to exercise the table gateway
@@ -80,6 +82,7 @@ class GatewayTestGenerator {
   Namespace namespace;
   /// Table details for transitive closure by foreign keys
   List<Gateway> gateways = [];
+
   // custom <class GatewayTestGenerator>
 
   get className => tableDetails.className;
@@ -194,13 +197,13 @@ ${gateways.map((gw) => _tableRandomSupport(gw.tableDetails)).join('\n')}
   }
 ''';
 
-  get _linkUp {
-    var parts = [];
-    for (var gw in gateways) {
-      final table = gw.table;
-      for (var fk in gw.foreignKeys.values) {
-        final refGw = gateways.firstWhere((gw) => gw.table == fk.refTable);
-        parts.add('''
+  get _linkUp =>
+      combine(
+          gateways
+              .expand((gw) => gw.foreignKeys.values
+                  .map((fk) => gateways
+                      .firstWhere((other) => other.table == fk.refTable))
+                  .map((refGw) => '''
 void patch_rows(${gw.rowListType} & rows) {
   auto ${refGw.rowList} = ${refGw.className}<>::instance().select_all_rows();
   BOOST_ASSERT(${refGw.rowList}.size() == num_rows);
@@ -208,11 +211,7 @@ void patch_rows(${gw.rowListType} & rows) {
     link_rows(rows[i], ${refGw.rowList}[i]);
   }
 }
-''');
-      }
-    }
-    return parts.join('\n');
-  }
+''')));
 
   get _testInsertUpdateDeleteRows => '''
 // testing insertion and deletion
@@ -233,6 +232,8 @@ ${gateways.reversed.map((gw) => gw.finalCleanup).join('\n')}
 ''';
 
   // end <class GatewayTestGenerator>
+
 }
+
 // custom <part test_support>
 // end <part test_support>

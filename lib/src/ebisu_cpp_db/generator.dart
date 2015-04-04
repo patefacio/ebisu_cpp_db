@@ -16,6 +16,7 @@ abstract class SchemaLibCreator {
   List<Query> queries = [];
   /// Can be used to filter to just the tables to be provided *CRUD* support
   TableFilter tableFilter = (Table t) => true;
+
   // custom <class SchemaLibCreator>
 
   get namespace => new Namespace(['fcs', 'orm', id.snake]);
@@ -50,6 +51,7 @@ abstract class SchemaLibCreator {
   }
 
   // end <class SchemaLibCreator>
+
   Id _id;
 }
 
@@ -64,6 +66,7 @@ class TableDetails {
   final String className;
   final Id keyClassId;
   final Id valueClassId;
+
   // custom <class TableDetails>
 
   factory TableDetails.fromTable(Schema schema, Table table) {
@@ -82,12 +85,14 @@ class TableDetails {
   get rowType => '$className<>::Row_t';
 
   // end <class TableDetails>
+
 }
 
 abstract class TableGatewayGenerator {
   SchemaLibCreator schemaLibCreator;
   Class keyClass;
   Class valueClass;
+
   // custom <class TableGatewayGenerator>
 
   TableGatewayGenerator(this.schemaLibCreator, Table table) {
@@ -265,9 +270,11 @@ print_values_as_table(Value_list_t const& values,
 ''';
 
   // end <class TableGatewayGenerator>
+
   TableDetails _tableDetails;
   Header _header;
 }
+
 // custom <part generator>
 
 typedef bool TableFilter(Table);

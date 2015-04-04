@@ -51,6 +51,7 @@ class OtlBindVariable {
   String name;
   BindDataType dataType;
   int size = 0;
+
   // custom <class OtlBindVariable>
 
   OtlBindVariable.fromDataType(this.name, SqlType sqlType) {
@@ -101,6 +102,7 @@ class OtlBindVariable {
   };
 
   // end <class OtlBindVariable>
+
 }
 
 /// Given a schema generates code to support accessing tables and configured
@@ -109,6 +111,7 @@ class OtlBindVariable {
 class OtlSchemaCodeGenerator extends SchemaLibCreator {
   Id get connectionClassId => _connectionClassId;
   String get connectionClassName => _connectionClassName;
+
   // custom <class OtlSchemaCodeGenerator>
 
   OtlSchemaCodeGenerator(Installation installation, Schema schema)
@@ -147,11 +150,13 @@ otl_connect * connection() {
 ''';
 
   // end <class OtlSchemaCodeGenerator>
+
   Id _connectionClassId;
   String _connectionClassName;
 }
 
 class OtlTableGatewayGenerator extends TableGatewayGenerator {
+
   // custom <class OtlTableGatewayGenerator>
 
   OtlTableGatewayGenerator(SchemaLibCreator schemaLibCreator, Table table)
@@ -372,6 +377,8 @@ ${cols.map((col) => '${_bindingVariableText(col)}').join(',\n')}
 ''';
 
   // end <class OtlTableGatewayGenerator>
+
 }
+
 // custom <part otl_generator>
 // end <part otl_generator>
