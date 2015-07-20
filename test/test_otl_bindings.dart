@@ -12,6 +12,7 @@ final _logger = new Logger('test_otl_bindings');
 
 // custom <library test_otl_bindings>
 // end <library test_otl_bindings>
+
 main([List<String> args]) {
   Logger.root.onRecord.listen(
       (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));

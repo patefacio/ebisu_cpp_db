@@ -13,9 +13,11 @@ dependencies:
   ini: ">=1.0.0<1.2.0"
   github: ">=2.1.2<2.2.0"
   sqljocky: ">=0.11.0<0.12.0"
-  magus: "^0.0.8"
-  ebisu_cpp: "^0.0.19"
-  ebisu: "^0.2.14"
+  magus: "^0.0.14"
+  ebisu_cpp: "^0.3.3"
+#  ebisu_cpp:
+#    path: /home/dbdavidson/dev/open_source/ebisu_cpp
+  ebisu: "^0.6.3"
 
 # end <ebisu_cpp_db dependencies>
 

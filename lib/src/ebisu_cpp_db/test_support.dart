@@ -69,7 +69,7 @@ class GatewayTestGenerator {
     gateways.add(new Gateway(tableDetails));
 
     test
-      ..includes.add('fcs/utils/streamers/random.hpp')
+      ..includes.add('ebisu/utils/streamers/random.hpp')
       ..addTestImplementations(
           {'insert_update_delete_rows': _testInsertUpdateDeleteRows,})
       ..getCodeBlock(fcbPreNamespace).snippets.add(_randomRow);
@@ -113,8 +113,8 @@ ${_classRandomRow(tableDetails.valueClassName, tableDetails.valueColumns)}
   get _randomRow => '''
 
 using namespace $namespace;
-using namespace fcs::utils::streamers;
-using fcs::utils::streamers::operator<<;
+using namespace ebisu::utils::streamers;
+using ebisu::utils::streamers::operator<<;
 
 int const num_rows = 20;
 Random_source random_source;
@@ -176,7 +176,7 @@ void find_by_key_check(GW &gw, typename GW::Row_list_t const& rows) {
 
 ${_linkUp}
 
-namespace fcs {
+namespace ebisu {
 namespace utils {
 namespace streamers {
   // random row generation

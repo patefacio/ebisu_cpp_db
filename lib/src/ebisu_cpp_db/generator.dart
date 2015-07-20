@@ -19,10 +19,10 @@ abstract class SchemaLibCreator {
 
   // custom <class SchemaLibCreator>
 
-  get namespace => new Namespace(['fcs', 'orm', id.snake]);
+  get namespace => new Namespace(['ebisu', 'orm', id.snake]);
   get tables => schema.tables.where((t) => tableFilter(t));
   TableGatewayGenerator createTableGatewayGenerator(Table t);
-  finishApiHeader(Header apiHeader);
+  finishCommonHeader(Header commonHeader);
 
   SchemaLibCreator(this.installation, this.schema) {
     _id = idFromString(schema.name);
@@ -33,16 +33,15 @@ abstract class SchemaLibCreator {
     _logger.info('Queries: ${queries.map((q) => queryVisitor.select(q))}');
     final ns = namespace;
 
-    final apiHeader = new Header(id)
-      ..isApiHeader = true
-      ..namespace = ns
-      ..setFilePathFromRoot(this.installation.cppPath);
-
-    finishApiHeader(apiHeader);
-
     final result = new Lib(id)
-      ..namespace = ns
-      ..headers = [apiHeader];
+    ..namespace = ns
+    ..withStandardizedHeader(libCommonHeader, (Header commonHeader) {
+      commonHeader
+        ..namespace = ns
+        ..setFilePathFromRoot(this.installation.cppPath);
+
+      finishCommonHeader(commonHeader);
+    });
 
     tables.forEach(
         (Table t) => result.headers.add(createTableGatewayGenerator(t).header));
@@ -204,8 +203,12 @@ to_string_list(String_list_t &out) const {
     });
 
     final gatewayClass = class_('${tableName}')
-      ..includesTest = !hasForeignKey
       ..isSingleton = true
+      ..testScenarios = [
+        testScenario('delete rows deletes rows'),
+        testScenario('insert rows inserts rows'),
+        testScenario('update rows updates rows'),
+      ]
       ..template = [
         'typename PKEY_LIST_TYPE = std::vector< $keyClassType >',
         'typename VALUE_LIST_TYPE = std::vector< $valueClassType >',
@@ -258,13 +261,13 @@ to_string_list(String_list_t &out) const {
 static void
 print_recordset_as_table(Row_list_t const& recordset,
                          std::ostream &out) {
-  fcs::orm::print_recordset_as_table< $className >(recordset, out);
+  ebisu::orm::print_recordset_as_table< $className >(recordset, out);
 }
 
 static void
 print_values_as_table(Value_list_t const& values,
                       std::ostream &out) {
-  fcs::orm::print_values_as_table< $className >(values, out);
+  ebisu::orm::print_values_as_table< $className >(values, out);
 }
 
 ''';
@@ -323,7 +326,7 @@ String _cppType(SqlType sqlType) {
     case SqlString:
       final str = sqlType as SqlString;
       return (str.length > 0)
-          ? 'fcs::utils::Fixed_size_char_array< ${str.length} >'
+          ? 'ebisu::utils::Fixed_size_char_array< ${str.length} >'
           : 'std::string';
     case SqlInt:
       return (sqlType as SqlInt).length <= 4 ? 'int32_t' : 'Orm_bigint_t';

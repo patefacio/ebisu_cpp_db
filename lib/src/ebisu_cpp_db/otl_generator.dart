@@ -125,10 +125,10 @@ class OtlSchemaCodeGenerator extends SchemaLibCreator {
   TableGatewayGenerator createTableGatewayGenerator(Table t) =>
       new OtlTableGatewayGenerator(this, t);
 
-  finishApiHeader(Header apiHeader) {
+  finishCommonHeader(Header commonHeader) {
     final connectionClass = 'connection_${id.snake}';
-    apiHeader
-      ..includes.add('fcs/orm/orm.hpp')
+    commonHeader
+      ..includes.add('ebisu/orm/orm_common.hpp')
       ..classes.add(class_(connectionClassId)
         ..getCodeBlock(clsPublic).snippets = [_connectionSingletonPublic]
         ..withDefaultCtor((ctor) => ctor.topInject = '''
@@ -174,7 +174,7 @@ class OtlTableGatewayGenerator extends TableGatewayGenerator {
   }
 
   void addRequiredIncludes(Header hdr) => hdr.includes
-      .addAll(['fcs/orm/otl_utils.hpp', 'fcs/orm/orm_to_string_table.hpp',]);
+      .addAll(['ebisu/orm/otl_utils.hpp', 'ebisu/orm/orm_to_string_table.hpp',]);
 
   get selectLastInsertId => '''
 int select_last_insert_id() {

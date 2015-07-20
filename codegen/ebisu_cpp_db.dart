@@ -12,7 +12,7 @@ void main() {
 
   Logger.root.onRecord.listen((LogRecord r) =>
       print("${r.loggerName} [${r.level}]:\t${r.message}"));
-  String here = path.absolute(Platform.script.path);
+  String here = path.absolute(Platform.script.toFilePath());
   _topDir = path.dirname(path.dirname(here));
   useDartFormatter = true;
   System ebisu = system('ebisu_cpp_db')
