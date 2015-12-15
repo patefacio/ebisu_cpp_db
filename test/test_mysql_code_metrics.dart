@@ -5,12 +5,11 @@
 /// support. This test does not ensure much other than that the
 /// appropriate classes are created, with expected members and
 /// methods. The real test for generated code is in the usage.
-///
-library ebisu_cpp_db.test.test_mysql_code_metrics;
+library ebisu_cpp_db.test_mysql_code_metrics;
 
-import 'package:args/args.dart';
 import 'package:logging/logging.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
+
 // custom <additional imports>
 
 import 'package:magus/schema.dart';
@@ -118,7 +117,8 @@ main([List<String> args]) {
   group('code_metrics', () {
     final tables = parser.parseTables(ddl);
     final engine = new MysqlEngine(null);
-    final installation = new Installation(new Id('test'))..rootFilePath = '/tmp';
+    final installation = new Installation(new Id('test'))
+      ..rootFilePath = '/tmp';
     final schema = new Schema(engine, 'code_metrics', tables);
     final generator = new OtlSchemaCodeGenerator(installation, schema)
       ..installation = installation;
@@ -126,11 +126,8 @@ main([List<String> args]) {
     final headers = lib.headers;
 
     test('creates header for each table', () {
-      [
-        'code_packages',
-        'code_locations',
-        'rusage_delta'
-      ].forEach((String tableName) {
+      ['code_packages', 'code_locations', 'rusage_delta']
+          .forEach((String tableName) {
         expect(headers.any((Header h) => h.id.snake == tableName), true);
       });
     });
@@ -178,5 +175,4 @@ main([List<String> args]) {
   });
 
   // end <main>
-
 }

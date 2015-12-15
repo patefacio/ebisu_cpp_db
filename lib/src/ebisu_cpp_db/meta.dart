@@ -3,7 +3,8 @@ part of ebisu_cpp_db.ebisu_cpp_db;
 class DataType {
   const DataType(this.dbType, this.cppType);
 
-  bool operator ==(DataType other) => identical(this, other) ||
+  bool operator ==(DataType other) =>
+      identical(this, other) ||
       dbType == other.dbType && cppType == other.cppType;
 
   int get hashCode => hash2(dbType, cppType);

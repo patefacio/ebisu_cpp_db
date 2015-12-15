@@ -80,6 +80,7 @@ class GatewayTestGenerator {
   Test test;
   TableDetails tableDetails;
   Namespace namespace;
+
   /// Table details for transitive closure by foreign keys
   List<Gateway> gateways = [];
 
@@ -197,13 +198,9 @@ ${gateways.map((gw) => _tableRandomSupport(gw.tableDetails)).join('\n')}
   }
 ''';
 
-  get _linkUp =>
-      combine(
-          gateways
-              .expand((gw) => gw.foreignKeys.values
-                  .map((fk) => gateways
-                      .firstWhere((other) => other.table == fk.refTable))
-                  .map((refGw) => '''
+  get _linkUp => combine(gateways.expand((gw) => gw.foreignKeys.values
+      .map((fk) => gateways.firstWhere((other) => other.table == fk.refTable))
+      .map((refGw) => '''
 void patch_rows(${gw.rowListType} & rows) {
   auto ${refGw.rowList} = ${refGw.className}<>::instance().select_all_rows();
   BOOST_ASSERT(${refGw.rowList}.size() == num_rows);

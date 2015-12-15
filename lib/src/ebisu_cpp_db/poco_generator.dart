@@ -2,7 +2,6 @@ part of ebisu_cpp_db.ebisu_cpp_db;
 
 /// Given a schema generates code to support accessing tables and configured
 /// queries. Makes use of the poco c++ library.
-///
 class PocoSchemaCodeGenerator extends SchemaLibCreator {
   Id get sessionClassId => _sessionClassId;
   String get sessionClassName => _sessionClassName;
@@ -29,7 +28,6 @@ class PocoSchemaCodeGenerator extends SchemaLibCreator {
 }
 
 class PocoTableGatewayGenerator extends TableGatewayGenerator {
-
   // custom <class PocoTableGatewayGenerator>
 
   PocoTableGatewayGenerator(

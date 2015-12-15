@@ -5,15 +5,18 @@ part of ebisu_cpp_db.ebisu_cpp_db;
 /// [Library] when called. If not all tables are desired to have *CRUD*
 /// access, they can be filtered with [tableFilter] prior to accessing the
 /// [lib].
-///
 abstract class SchemaLibCreator {
   Installation installation;
+
   /// Target schema for generating C++ *CRUD* support
   Schema schema;
+
   /// Id associated with the schema
   Id get id => _id;
+
   /// Set of SQL queries to add C++ support
   List<Query> queries = [];
+
   /// Can be used to filter to just the tables to be provided *CRUD* support
   TableFilter tableFilter = (Table t) => true;
 
@@ -34,14 +37,14 @@ abstract class SchemaLibCreator {
     final ns = namespace;
 
     final result = new Lib(id)
-    ..namespace = ns
-    ..withStandardizedHeader(libCommonHeader, (Header commonHeader) {
-      commonHeader
-        ..namespace = ns
-        ..setFilePathFromRoot(this.installation.cppPath);
+      ..namespace = ns
+      ..withStandardizedHeader(libCommonHeader, (Header commonHeader) {
+        commonHeader
+          ..namespace = ns
+          ..setFilePathFromRoot(this.installation.cppPath);
 
-      finishCommonHeader(commonHeader);
-    });
+        finishCommonHeader(commonHeader);
+      });
 
     tables.forEach(
         (Table t) => result.headers.add(createTableGatewayGenerator(t).header));
@@ -70,8 +73,13 @@ class TableDetails {
 
   factory TableDetails.fromTable(Schema schema, Table table) {
     final tableId = idFromString(table.name);
-    return new TableDetails(schema, table, tableId, table.name,
-        tableId.capSnake, idFromString('${tableId.snake}_pkey'),
+    return new TableDetails(
+        schema,
+        table,
+        tableId,
+        table.name,
+        tableId.capSnake,
+        idFromString('${tableId.snake}_pkey'),
         idFromString('${tableId.snake}_value'));
   }
 
@@ -172,7 +180,9 @@ to_string_list(String_list_t &out) const {
       ..opLess
       ..isStreamable = true
       ..members = columns.map((c) => _makeMember(c)).toList();
-    result.getCodeBlock(clsPublic).snippets
+    result
+        .getCodeBlock(clsPublic)
+        .snippets
         .add(_stringListSupport(result.members));
     finishClass(result);
     return result;
@@ -187,9 +197,8 @@ to_string_list(String_list_t &out) const {
     return _header;
   }
 
-  Namespace get namespace => new Namespace([]
-    ..addAll(schemaLibCreator.namespace.names)
-    ..addAll(['table']));
+  Namespace get namespace => new Namespace(
+      []..addAll(schemaLibCreator.namespace.names)..addAll(['table']));
 
   Header _makeHeader() {
     final keyClassType = keyClass.className;

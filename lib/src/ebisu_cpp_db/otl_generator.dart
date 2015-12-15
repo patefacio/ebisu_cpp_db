@@ -15,6 +15,7 @@ enum BindDataType {
   bdtVarcharLong,
   bdtTimestamp
 }
+
 /// Convenient access to BindDataType.bdtInt with *bdtInt* see [BindDataType].
 ///
 const BindDataType bdtInt = BindDataType.bdtInt;
@@ -107,7 +108,6 @@ class OtlBindVariable {
 
 /// Given a schema generates code to support accessing tables and configured
 /// queries. Makes use of the otl c++ library.
-///
 class OtlSchemaCodeGenerator extends SchemaLibCreator {
   Id get connectionClassId => _connectionClassId;
   String get connectionClassName => _connectionClassName;
@@ -156,7 +156,6 @@ otl_connect * connection() {
 }
 
 class OtlTableGatewayGenerator extends TableGatewayGenerator {
-
   // custom <class OtlTableGatewayGenerator>
 
   OtlTableGatewayGenerator(SchemaLibCreator schemaLibCreator, Table table)
@@ -173,8 +172,8 @@ class OtlTableGatewayGenerator extends TableGatewayGenerator {
       ..initText = 'Connection_code_metrics::instance().connection()');
   }
 
-  void addRequiredIncludes(Header hdr) => hdr.includes
-      .addAll(['ebisu/orm/otl_utils.hpp', 'ebisu/orm/orm_to_string_table.hpp',]);
+  void addRequiredIncludes(Header hdr) => hdr.includes.addAll(
+      ['ebisu/orm/otl_utils.hpp', 'ebisu/orm/orm_to_string_table.hpp',]);
 
   get selectLastInsertId => '''
 int select_last_insert_id() {

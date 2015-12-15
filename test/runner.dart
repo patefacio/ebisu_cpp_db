@@ -1,12 +1,6 @@
-import 'package:unittest/unittest.dart';
 import 'package:logging/logging.dart';
 import 'test_otl_bindings.dart' as test_otl_bindings;
 import 'test_mysql_code_metrics.dart' as test_mysql_code_metrics;
-
-void testCore(Configuration config) {
-  unittestConfiguration = config;
-  main();
-}
 
 main() {
   Logger.root.level = Level.OFF;

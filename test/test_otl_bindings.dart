@@ -1,8 +1,8 @@
-library ebisu_cpp_db.test.test_otl_bindings;
+library ebisu_cpp_db.test_otl_bindings;
 
-import 'package:args/args.dart';
 import 'package:logging/logging.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
+
 // custom <additional imports>
 import 'package:magus/schema.dart';
 import 'package:ebisu_cpp_db/ebisu_cpp_db.dart';
@@ -85,5 +85,4 @@ main([List<String> args]) {
   });
 
 // end <main>
-
 }
