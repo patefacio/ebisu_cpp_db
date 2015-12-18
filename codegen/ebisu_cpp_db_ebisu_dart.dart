@@ -1,19 +1,24 @@
-import "dart:io";
-import "package:path/path.dart" as path;
-import "package:ebisu/ebisu.dart";
-import "package:ebisu/ebisu_dart_meta.dart";
-import "package:logging/logging.dart";
+#!/usr/bin/env dart
+import 'dart:io';
+import 'package:args/args.dart';
+import 'package:ebisu/ebisu.dart';
+import 'package:ebisu/ebisu_dart_meta.dart';
+import 'package:logging/logging.dart';
+import 'package:path/path.dart';
+// custom <additional imports>
+// end <additional imports>
+final _logger = new Logger('ebisuCppDbEbisuDart');
 
-String _topDir;
-
-void main() {
-
-  final briefDoc = 'A library that supports code generation of C++ database access';
-
+main(List<String> args) {
   Logger.root.onRecord.listen((LogRecord r) =>
       print("${r.loggerName} [${r.level}]:\t${r.message}"));
-  String here = path.absolute(Platform.script.toFilePath());
-  _topDir = path.dirname(path.dirname(here));
+  Logger.root.level = Level.OFF;
+  useDartFormatter = true;
+  String here = absolute(Platform.script.toFilePath());
+  // custom <ebisuCppDbEbisuDart main>
+  final briefDoc = 'A library that supports code generation of C++ database access';
+
+  String _topDir = dirname(dirname(here));
   useDartFormatter = true;
   System ebisu = system('ebisu_cpp_db')
     ..includesHop = true
@@ -22,7 +27,6 @@ void main() {
     ..pubSpec.version = '0.0.8'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
-    ..pubSpec.addDevDependency(new PubDependency('unittest'))
     ..rootPath = _topDir
     ..doc = briefDoc
     ..testLibraries = [
@@ -196,8 +200,11 @@ queries. Makes use of the poco c++ library.
     ];
 
   ebisu.generate();
+
+  // end <ebisuCppDbEbisuDart main>
 }
 
+// custom <ebisuCppDbEbisuDart global>
 
 final dbSchemaDoc = '''
 Generates code to support **CRUD** operations and other tasks on relational database.
@@ -214,3 +221,5 @@ is MySql. However the code is generated and attempts are made to make it easy to
 add support for other databases.
 
 ''';
+// end <ebisuCppDbEbisuDart global>
+
