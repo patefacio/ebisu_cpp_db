@@ -24,7 +24,7 @@ main(List<String> args) {
     ..includesHop = true
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
-    ..pubSpec.version = '0.0.8'
+    ..pubSpec.version = '0.0.9'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..rootPath = _topDir
@@ -118,6 +118,10 @@ access, they can be filtered with [tableFilter] prior to accessing the
             member('table_filter')
             ..doc = 'Can be used to filter to just the tables to be provided *CRUD* support'
             ..type = 'TableFilter'..classInit = '(Table t) => true',
+            member('namespace')
+            ..doc = 'Namespace for the lib'
+            ..type = 'Namespace'
+            ..access = WO,
           ],
           class_('table_details')
           ..isImmutable = true
@@ -222,4 +226,3 @@ add support for other databases.
 
 ''';
 // end <ebisuCppDbEbisuDart global>
-

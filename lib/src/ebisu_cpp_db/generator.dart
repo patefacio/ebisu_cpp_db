@@ -20,9 +20,12 @@ abstract class SchemaLibCreator {
   /// Can be used to filter to just the tables to be provided *CRUD* support
   TableFilter tableFilter = (Table t) => true;
 
+  /// Namespace for the lib
+  set namespace(Namespace namespace) => _namespace = namespace;
+
   // custom <class SchemaLibCreator>
 
-  get namespace => new Namespace(['ebisu', 'orm', id.snake]);
+  get namespace => _namespace ?? new Namespace(['ebisu', 'orm', id.snake]);
   get tables => schema.tables.where((t) => tableFilter(t));
   TableGatewayGenerator createTableGatewayGenerator(Table t);
   finishCommonHeader(Header commonHeader);
@@ -55,6 +58,7 @@ abstract class SchemaLibCreator {
   // end <class SchemaLibCreator>
 
   Id _id;
+  Namespace _namespace;
 }
 
 class TableDetails {
