@@ -1,5 +1,7 @@
 # Ebisu Cpp Db
 
+![Build Status](https://travis-ci.org/patefacio/ebisu_cpp_db.svg)
+
 A package that generates C++ code supporting various types of access to specific schema of a relational database. This is not about the layer that interacts directly with the database. Rather, it is the often boilerplate code that sits on top of that, providing access to tables and queries in fairly standard ways.
 
 # Purpose
