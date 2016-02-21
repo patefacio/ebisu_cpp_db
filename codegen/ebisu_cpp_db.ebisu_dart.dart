@@ -24,7 +24,7 @@ main(List<String> args) {
     ..includesHop = true
     ..license = 'boost'
     ..pubSpec.homepage = 'https://github.com/patefacio/ebisu_cpp_db'
-    ..pubSpec.version = '0.0.10'
+    ..pubSpec.version = '0.0.11'
     ..pubSpec.doc = briefDoc
     ..pubSpec.addDependency(new PubDependency('path')..version = ">=1.3.0<1.4.0")
     ..rootPath = _topDir
